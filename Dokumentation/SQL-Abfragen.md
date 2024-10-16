@@ -67,7 +67,7 @@ SELECT AVG(numberOfTracks) AS averageNumberOfTracks FROM (SELECT Album.AlbumId, 
 * Gib mir die durchschnittliche Anzahl Tracks in einem Album.
 
 ---
- 
+
 ### Stufe 11: (SELECT, FROM, JOIN (multiple), ON, WHERE, EXCEPT):
 SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 3 EXCEPT SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 9;
 * Gib mir alle Namen der Künstler die einen Track in Playlist 3 haben, aber nicht in Playlist 9.
