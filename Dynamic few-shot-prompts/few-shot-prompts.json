@@ -1,0 +1,44 @@
+[
+    {   "input": "Liste alle Künstler auf.",
+        "query": "SELECT * FROM Artist;"},
+    {
+        "input": "Finde alle Alben des Künstlers 'AC/DC'.",
+        "query": "SELECT * FROM Album WHERE ArtistId = (SELECT ArtistId FROM Artist WHERE Name = 'AC/DC');"
+    },
+    {
+        "input": "Liste alle Titel im Genre 'Rock' auf.",
+        "query": "SELECT * FROM Track WHERE GenreId = (SELECT GenreId FROM Genre WHERE Name = 'Rock');"
+    },
+    {
+        "input": "Finde die Gesamtdauer aller Titel.",
+        "query": "SELECT SUM(Milliseconds) FROM Track;"
+    },
+    {
+        "input": "Liste alle Kunden aus Kanada auf.",
+        "query": "SELECT * FROM Customer WHERE Country = 'Canada';"
+    },
+    {
+        "input": "Wie viele Titel gibt es im Album mit der ID 5?",
+        "query": "SELECT COUNT(*) FROM Track WHERE AlbumId = 5;"
+    },
+    {
+        "input": "Finde die Gesamtanzahl der Rechnungen.",
+        "query": "SELECT COUNT(*) FROM Invoice;"
+    },
+    {
+        "input": "Liste alle Titel auf, die länger als 5 Minuten sind.",
+        "query": "SELECT * FROM Track WHERE Milliseconds > 300000;"
+    },
+    {
+        "input": "Wer sind die Top 5 Kunden nach Gesamteinkauf?",
+        "query": "SELECT CustomerId, SUM(Total) AS TotalPurchase FROM Invoice GROUP BY CustomerId ORDER BY TotalPurchase DESC LIMIT 5;"
+    },
+    {
+        "input": "Welche Alben stammen aus dem Jahr 2000?",
+        "query": "SELECT * FROM Album WHERE strftime('%Y', ReleaseDate) = '2000';"
+    },
+    {
+        "input": "Wie viele Mitarbeiter gibt es?",
+        "query": "SELECT COUNT(*) FROM Employee;"
+    }
+]
