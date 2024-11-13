@@ -68,15 +68,15 @@ SELECT Album.Title, COUNT(*) AS numberOfTracks FROM PlaylistTrack JOIN Track ON 
 
 ---
 
-### Stufe 11: (SELECT, FROM, JOIN (multiple), ON, WHERE, EXCEPT):
-SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 3 EXCEPT SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 9;
-* Gib mir alle Namen der Künstler, die einen Track in der Playlist mit der ID 3 haben, aber nicht in der Playlist mit der ID 9.
+### Stufe 11: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
+SELECT Title, SUM(InvoiceLine.UnitPrice) AS moneyEarned, COUNT(*) AS unitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY moneyEarned DESC LIMIT 1;
+* Gib mir den Namen des Albums, mit den höchsten Gesamteinnahmen aus Track-Verkäufen, sowie die summierten Einnahmen dieser Tracks, basierend auf den durchschnittlichen Einzelpreisen der Tracks und die Anzahl verkaufter Tracks des Albums.
 
 ---
 
-### Stufe 12: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Title, trackSales AS moneyEarned, trackSales / (SELECT AVG(InvoiceLine.UnitPrice) FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId WHERE Track.AlbumId = maxSales.AlbumId) AS unitsSold FROM (SELECT Album.AlbumId, Album.Title, SUM(InvoiceLine.UnitPrice) AS trackSales FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId GROUP BY Album.AlbumId ORDER BY trackSales DESC LIMIT 1) AS maxSales;
-* Gib mir den Namen des Albums, mit den höchsten Gesamteinnahmen aus Track-Verkäufen, sowie die summierten Einnahmen dieser Tracks, basierend auf den durchschnittlichen Einzelpreisen der Tracks und die Anzahl verkaufter Tracks des Albums.
+### Stufe 12: (SELECT, FROM, JOIN (multiple), ON, WHERE, EXCEPT):
+SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 3 EXCEPT SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 9;
+* Gib mir alle Namen der Künstler, die einen Track in der Playlist mit der ID 3 haben, aber nicht in der Playlist mit der ID 9.
 
 ---
 
