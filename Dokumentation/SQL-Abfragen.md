@@ -39,7 +39,7 @@ SELECT BillingCountry, SUM(Total) AS TotalSales FROM Invoice GROUP BY BillingCou
 ---
 
 ### Stufe 6: (SELECT, COUNT, AVG, AS, FROM, GROUP BY):
-SELECT AVG(numberOfTracks) AS averageNumberOfTracks FROM (SELECT COUNT(*) AS numberOfTracks FROM Track GROUP BY AlbumId) AS numberOfTracks;
+SELECT AVG(numberOfTracks) AS averageNumberOfTracks FROM (SELECT COUNT(*) AS numberOfTracks FROM Track GROUP BY AlbumId);
 * Gib mir die durchschnittliche Anzahl Tracks in einem Album.
 
 --- 
@@ -57,19 +57,19 @@ SELECT InvoiceLine.*, Track.Name AS Track FROM InvoiceLine JOIN Track ON Invoice
 ---
 
 ### Stufe 9: (SELECT, COUNT, AS, FROM, JOIN, ON, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Album.Title, COUNT(*) AS numberOfTracks FROM Track JOIN Album ON Track.AlbumId = Album.AlbumId GROUP BY Title ORDER BY numberOfTracks DESC LIMIT 10;
+SELECT Album.Title, COUNT(*) AS numberOfTracks FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 10;
 * Zeige mir die Titel und Anzahl Tracks der 10 Alben mit den meisten Tracks.
 
 ---
 
 ### Stufe 10: (SELECT, COUNT, AS, FROM, JOIN (multiple), ON, WHERE, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Album.Title, COUNT(*) AS numberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Title ORDER BY numberOfTracks DESC LIMIT 1;
+SELECT Album.Title, COUNT(*) AS numberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 1;
 * Zeig mir den Titel und die Anzahl Tracks des Albums, das am meisten Tracks in der Playlist mit der ID 10 hat.
 
 ---
 
 ### Stufe 11: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Title, SUM(InvoiceLine.UnitPrice) AS moneyEarned, COUNT(*) AS unitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY moneyEarned DESC LIMIT 1;
+SELECT Title, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS moneyEarned, COUNT(InvoiceLine.Quantity) AS unitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY moneyEarned DESC LIMIT 1;
 * Gib mir den Namen des Albums, mit den höchsten Gesamteinnahmen aus Track-Verkäufen, sowie die summierten Einnahmen dieser Tracks, basierend auf den durchschnittlichen Einzelpreisen der Tracks und die Anzahl verkaufter Tracks des Albums.
 
 ---
