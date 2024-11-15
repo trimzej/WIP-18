@@ -133,13 +133,7 @@ ORDER BY CustomerId, Season;
 ---
 
 ### Stufe 15: (SELECT, FROM, WHERE, EXISTS, AND)
-SELECT FirstName, LastName
-FROM Customer c
-WHERE EXISTS (
-    SELECT 1 
-    FROM Invoice i 
-    WHERE i.CustomerId = c.CustomerId AND i.Total > 20
-) AND Country = 'USA';
+SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId WHERE Customer.Country = 'USA' AND Invoice.Total > 20;
 * Zeige mir die Vornamen und Nachnamen der Kunden aus den USA, die mindestens eine Rechnung mit einem Betrag von über 20 haben.
 
 ---
