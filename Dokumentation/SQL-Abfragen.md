@@ -39,13 +39,13 @@ SELECT BillingCountry, SUM(Total) AS TotalSales FROM Invoice GROUP BY BillingCou
 ---
 
 ### Stufe 6: (SELECT, COUNT, AVG, AS, FROM, GROUP BY):
-SELECT AVG(numberOfTracks) AS averageNumberOfTracks FROM (SELECT COUNT(*) AS numberOfTracks FROM Track GROUP BY AlbumId);
+SELECT AVG(NumberOfTracks) AS AverageNumberOfTracks FROM (SELECT COUNT(*) AS NumberOfTracks FROM Track GROUP BY AlbumId);
 * Gib mir die durchschnittliche Anzahl Tracks in einem Album.
 
 --- 
 
 ### Stufe 7: (SELECT, COUNT, AS, FROM, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT ArtistId, COUNT(*) AS numberOfAlbums FROM Album GROUP BY ArtistId ORDER BY numberOfAlbums DESC LIMIT 10;
+SELECT ArtistId, COUNT(*) AS NumberOfAlbums FROM Album GROUP BY ArtistId ORDER BY NumberOfAlbums DESC LIMIT 10;
 * Zeige mir die ID und die Anzahl Alben der 10 Künstler mit den meisten Alben, in absteigender Reihenfolge.
 
 ---
@@ -63,13 +63,13 @@ SELECT InvoiceLine.*, Track.Name AS Track FROM InvoiceLine JOIN Track ON Invoice
 ---
 
 ### Stufe 10: (SELECT, COUNT, AS, FROM, JOIN, ON, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Album.Title, COUNT(*) AS numberOfTracks FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 10;
+SELECT Album.Title, COUNT(*) AS NumberOfTracks FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY NumberOfTracks DESC LIMIT 10;
 * Zeige mir die Titel und Anzahl Tracks der 10 Alben mit den meisten Tracks.
 
 ---
 
 ### Stufe 11: (SELECT, AS, FROM, JOIN, ON, GROUP BY, HAVING, COUNT, ORDER BY, DESC)
-SELECT Genre.Name AS Genre, COUNT(Track.TrackId) AS trackCount FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name HAVING COUNT(Track.TrackId) > 50 ORDER BY trackCount DESC;
+SELECT Genre.Name AS Genre, COUNT(Track.TrackId) AS TrackCount FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name HAVING COUNT(Track.TrackId) > 50 ORDER BY TrackCount DESC;
 * Liste mir alle Genres mit mehr als 50 Tracks, zusammen mit der Anzahl der Tracks, in absteigender Reihenfolge.
 
 ---
@@ -81,13 +81,13 @@ SELECT Artist.Name AS Artist, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) 
 ---
 
 ### Stufe 13: (SELECT, COUNT, AS, FROM, JOIN (multiple), ON, WHERE, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Album.Title, COUNT(*) AS numberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 1;
+SELECT Album.Title, COUNT(*) AS NumberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Album.AlbumId ORDER BY NumberOfTracks DESC LIMIT 1;
 * Zeig mir den Titel und die Anzahl Tracks des Albums, das am meisten Tracks in der Playlist mit der ID 10 hat.
 
 ---
 
 ### Stufe 14: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
-SELECT Title, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS moneyEarned, COUNT(InvoiceLine.Quantity) AS unitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY moneyEarned DESC LIMIT 1;
+SELECT Title, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS MoneyEarned, COUNT(InvoiceLine.Quantity) AS UnitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY MoneyEarned DESC LIMIT 1;
 * Gib mir den Namen des Albums, mit den höchsten Gesamteinnahmen aus Track-Verkäufen, sowie die summierten Einnahmen dieser Tracks, basierend auf den durchschnittlichen Einzelpreisen der Tracks und die Anzahl verkaufter Tracks des Albums.
 
 ---
@@ -105,7 +105,7 @@ SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName, CASE WHEN MAX
 ---
 
 ### Stufe 17: (WITH, FROM, WHERE, AS, SELECT, JOIN, ON, ROW_NUMBER, OVER, PARTITION BY, GROUP BY, ORDER BY (multiple), SUM, AVG, DESC)
-WITH CustomerSpending AS (SELECT Customer.Country, Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS totalSpent, AVG(Invoice.Total) AS avgSpent, ROW_NUMBER() OVER (PARTITION BY Customer.Country ORDER BY SUM(Invoice.Total) DESC) AS spendingRank FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId) SELECT Country, FirstName, LastName, totalSpent, avgSpent FROM CustomerSpending WHERE spendingRank = 1 ORDER BY totalSpent DESC;
+WITH CustomerSpending AS (SELECT Customer.Country, Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS TotalSpent, AVG(Invoice.Total) AS AvgSpent, ROW_NUMBER() OVER (PARTITION BY Customer.Country ORDER BY SUM(Invoice.Total) DESC) AS SpendingRank FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId) SELECT Country, FirstName, LastName, TotalSpent, AvgSpent FROM CustomerSpending WHERE SpendingRank = 1 ORDER BY totalSpent DESC;
 * Zeige mir für jedes Land den Kunden (Vorname, Nachname) mit den höchsten Gesamtausgaben und zeige seine Gesamtausgaben und durchschnittlichen Ausgaben an.
 
 ---
