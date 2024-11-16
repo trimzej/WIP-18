@@ -26,7 +26,7 @@ SELECT * FROM Invoice WHERE BillingCountry = 'Brazil' AND Total > 6;
 
 ---
 
-### Stufe 4: (SELECT, FROM, ODER BY, DESC, LIMIT):
+### Stufe 4: (SELECT, FROM, ORDER BY, DESC, LIMIT):
 SELECT Name FROM Track ORDER BY Milliseconds DESC LIMIT 5;
 * Gib mir die Namen der 5 Tracks mit der längsten Dauer.
 
@@ -50,43 +50,81 @@ SELECT ArtistId, COUNT(*) AS numberOfAlbums FROM Album GROUP BY ArtistId ORDER B
 
 ---
 
-### Stufe 8: (SELECT, AS, FROM, JOIN, ON, ORDER BY, WHERE)
+### Stufe 8: (SELECT, DISTINCT, FROM, WHERE, AND, JOIN, ON)
+SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId WHERE Customer.Country = 'USA' AND Invoice.Total > 20;
+* Zeige mir die Vornamen und Nachnamen der Kunden aus den USA, die mindestens eine Rechnung mit einem Betrag von über 20 haben.
+
+---
+
+### Stufe 9: (SELECT, AS, FROM, JOIN, ON, ORDER BY, WHERE)
 SELECT InvoiceLine.*, Track.Name AS Track FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId WHERE InvoiceLineId < 21 ORDER BY Track;
 * Liste mir die Rechnungsposten mit ID 1-20 auf, einschliesslich der zugehörigen Namen der Tracks und sortiere sie in alphabetischer Reihenfolge basierend auf dem Track Namen.
 
 ---
 
-### Stufe 9: (SELECT, COUNT, AS, FROM, JOIN, ON, GROUP BY, ORDER BY, DESC, LIMIT):
+### Stufe 10: (SELECT, COUNT, AS, FROM, JOIN, ON, GROUP BY, ORDER BY, DESC, LIMIT):
 SELECT Album.Title, COUNT(*) AS numberOfTracks FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 10;
 * Zeige mir die Titel und Anzahl Tracks der 10 Alben mit den meisten Tracks.
 
 ---
 
-### Stufe 10: (SELECT, COUNT, AS, FROM, JOIN (multiple), ON, WHERE, GROUP BY, ORDER BY, DESC, LIMIT):
+### Stufe 11: (SELECT, AS, FROM, JOIN, ON, GROUP BY, HAVING, COUNT, ORDER BY, DESC)
+SELECT Genre.Name AS Genre, COUNT(Track.TrackId) AS trackCount FROM Track JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Genre.Name HAVING COUNT(Track.TrackId) > 50 ORDER BY trackCount DESC;
+* Liste mir alle Genres mit mehr als 50 Tracks, zusammen mit der Anzahl der Tracks, in absteigender Reihenfolge.
+
+---
+
+### Stufe 12: (SELECT, SUM, AS, FROM, JOIN (multiple), GROUP BY, HAVING, ORDER BY, DESC, COUNT)
+SELECT Artist.Name AS Artist, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS TotalSales FROM InvoiceLine JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId GROUP BY Artist HAVING COUNT(InvoiceLine.InvoiceLineId) > 100 ORDER BY TotalSales DESC;
+* Zeige mir die Künstler und deren Gesamtumsatz in absteigender Reihenfolge nach dem Gesamtumsatz, aber nur für Künstler mit mehr als 100 verkauften Tracks.
+
+---
+
+### Stufe 13: (SELECT, COUNT, AS, FROM, JOIN (multiple), ON, WHERE, GROUP BY, ORDER BY, DESC, LIMIT):
 SELECT Album.Title, COUNT(*) AS numberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Album.AlbumId ORDER BY numberOfTracks DESC LIMIT 1;
 * Zeig mir den Titel und die Anzahl Tracks des Albums, das am meisten Tracks in der Playlist mit der ID 10 hat.
 
 ---
 
-### Stufe 11: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
+### Stufe 14: (SELECT, FROM, AVG, SUM, AS, JOIN (multiple), ON, GROUP BY, ORDER BY, DESC, LIMIT):
 SELECT Title, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS moneyEarned, COUNT(InvoiceLine.Quantity) AS unitsSold FROM Album JOIN Track ON Album.AlbumId = Track.AlbumId JOIN InvoiceLine ON Track.TrackId = InvoiceLine.TrackId GROUP BY Album.AlbumId ORDER BY moneyEarned DESC LIMIT 1;
 * Gib mir den Namen des Albums, mit den höchsten Gesamteinnahmen aus Track-Verkäufen, sowie die summierten Einnahmen dieser Tracks, basierend auf den durchschnittlichen Einzelpreisen der Tracks und die Anzahl verkaufter Tracks des Albums.
 
 ---
 
-### Stufe 12: (SELECT, FROM, JOIN (multiple), ON, WHERE, EXCEPT):
+### Stufe 15: (SELECT, FROM, JOIN (multiple), ON, WHERE, EXCEPT):
 SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 3 EXCEPT SELECT Artist.Name FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId JOIN Artist ON Album.ArtistId = Artist.ArtistId WHERE PlaylistTrack.PlaylistId = 9;
 * Gib mir alle Namen der Künstler, die einen Track in der Playlist mit der ID 3 haben, aber nicht in der Playlist mit der ID 9.
 
 ---
 
-### Stufe 13: (SELECT, FROM, SUM, AS, JOIN (multiple), ON, GROUP BY, CASE, WHEN, THEN, ELSE, END):
+### Stufe 16: (SELECT, FROM, JOIN, ON, GROUP BY, ORDER BY, MAX, CASE, WHEN, THEN, ELSE, END, AS, BETWEEN, AND, WHERE, DESC)
+SELECT Customer.CustomerId, Customer.FirstName, Customer.LastName, CASE WHEN MAX(Invoice.Total) > 50 THEN 'High Spender' WHEN MAX(Invoice.Total) BETWEEN 20 AND 50 THEN 'Medium Spender' ELSE 'Low Spender' END AS SpendingCategory FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId ORDER BY SpendingCategory DESC;
+* Kategorisiere jeden Kunden als "High Spender", "Medium Spender" oder "Low Spender" basierend auf dem höchsten Rechnungsbetrag, und sortiere die Kunden nach diesen Kategorien: (High Spender > 50, Medium Spender 20-50, Low Spender < 20).
+
+---
+
+### Stufe 17: (WITH, FROM, WHERE, AS, SELECT, JOIN, ON, ROW_NUMBER, OVER, PARTITION BY, GROUP BY, ORDER BY (multiple), SUM, AVG, DESC)
+WITH CustomerSpending AS (SELECT Customer.Country, Customer.FirstName, Customer.LastName, SUM(Invoice.Total) AS totalSpent, AVG(Invoice.Total) AS avgSpent, ROW_NUMBER() OVER (PARTITION BY Customer.Country ORDER BY SUM(Invoice.Total) DESC) AS spendingRank FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId GROUP BY Customer.CustomerId) SELECT Country, FirstName, LastName, totalSpent, avgSpent FROM CustomerSpending WHERE spendingRank = 1 ORDER BY totalSpent DESC;
+* Zeige mir für jedes Land den Kunden (Vorname, Nachname) mit den höchsten Gesamtausgaben und zeige seine Gesamtausgaben und durchschnittlichen Ausgaben an.
+
+---
+
+### Stufe 18: (SELECT, FROM, SUM, AS, JOIN (multiple), ON, GROUP BY, CASE, WHEN, THEN, ELSE, END):
 SELECT Invoice.BillingCountry, SUM(CASE WHEN Genre.Name = 'Rock' THEN 1 ELSE 0 END) AS Rock, SUM(CASE WHEN Genre.Name = 'Jazz' THEN 1 ELSE 0 END) AS Jazz, SUM(CASE WHEN Genre.Name = 'Metal' THEN 1 ELSE 0 END) AS Metal, SUM(CASE WHEN Genre.Name = 'Alternative & Punk' THEN 1 ELSE 0 END) AS Alternative_Punk, SUM(CASE WHEN Genre.Name = 'Classical' THEN 1 ELSE 0 END) AS Classical, SUM(CASE WHEN Genre.Name = 'Pop' THEN 1 ELSE 0 END) AS Pop, SUM(CASE WHEN Genre.Name = 'Latin' THEN 1 ELSE 0 END) AS Latin FROM Invoice JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Invoice.BillingCountry;
 * Erstelle eine Tabelle, die die Anzahl der Verkauften Tracks nach Genre in jedem Land aufzeigt, mit den Genres: Rock, Jazz, Metal, Alternative & Punk, Classical, Pop und Latin.
 
 ---
 
-### Stufe 14: (WITH, CASE, JOIN (multiple), GROUP BY, COUNT, RANK, PARTITION BY, ORDER BY (multiple), WHERE)
+### Stufe 19: (WITH, AS, SELECT, COUNT(multiple), SUM, RANK, OVER, PARTITION BY, ORDER BY (multiple), DESC (multiple), FROM, JOIN (multiple), ON, GROUP BY, WHERE)
+WITH GenrePreferences AS (SELECT Customer.CustomerId, Genre.Name AS Genre, COUNT(InvoiceLine.InvoiceLineId) AS GenreCount, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) AS TotalSpent, RANK() OVER (PARTITION BY Customer.CustomerId ORDER BY COUNT(InvoiceLine.InvoiceLineId) DESC) AS GenreRank FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Customer.CustomerId, Genre.Name) SELECT CustomerId, Genre, GenreCount, TotalSpent FROM GenrePreferences WHERE GenreRank = 1 ORDER BY TotalSpent DESC;
+* Zeige für jeden Kunden das Genre, das er am häufigsten gekauft hat, zusammen mit der Anzahl und dem Gesamtumsatz dieses Genres, und sortiere das Ergebnis nach dem Gesamtumsatz in absteigender Reihenfolge.
+
+---
+
+IDK????
+
+### Stufe 20: (WITH, CASE, JOIN (multiple), GROUP BY, COUNT, RANK, PARTITION BY, ORDER BY (multiple), WHERE)
 WITH SeasonalPurchases AS (
     SELECT 
         c.CustomerId,
@@ -131,90 +169,3 @@ ORDER BY CustomerId, Season;
 * Zeige mir für jeden Kunden und jede Jahreszeit das Genre, das er am häufigsten gekauft hat.
 
 ---
-
-### Stufe 15: (SELECT, FROM, WHERE, EXISTS, AND)
-SELECT DISTINCT Customer.FirstName, Customer.LastName FROM Customer JOIN Invoice ON Customer.CustomerId = Invoice.CustomerId WHERE Customer.Country = 'USA' AND Invoice.Total > 20;
-* Zeige mir die Vornamen und Nachnamen der Kunden aus den USA, die mindestens eine Rechnung mit einem Betrag von über 20 haben.
-
----
-
-### Stufe 16: (SELECT, FROM, JOIN, GROUP BY, HAVING, COUNT, ORDER BY, DESC)
-SELECT g.Name AS Genre, COUNT(t.TrackId) AS TrackCount
-FROM Track t
-JOIN Genre g ON t.GenreId = g.GenreId
-GROUP BY g.Name
-HAVING COUNT(t.TrackId) > 50
-ORDER BY TrackCount DESC;
-* Liste mir alle Genres mit mehr als 50 Tracks, zusammen mit der Anzahl der Tracks, in absteigender Reihenfolge.
-
----
-
-### Stufe 17: (SELECT, SUM, AS, JOIN, GROUP BY, HAVING, ORDER BY, DESC, COUNT, ROUND)
-SELECT a.Name AS Artist, ROUND(SUM(il.UnitPrice * il.Quantity), 2) AS TotalSales
-FROM InvoiceLine il
-JOIN Track t ON il.TrackId = t.TrackId
-JOIN Album al ON t.AlbumId = al.AlbumId
-JOIN Artist a ON al.ArtistId = a.ArtistId
-GROUP BY a.Name
-HAVING COUNT(il.InvoiceLineId) > 100
-ORDER BY TotalSales DESC;
-* Zeige mir die Künstler und deren Gesamtumsatz, aber nur für Künstler mit mehr als 100 verkauften Tracks, in absteigender Reihenfolge.
-
----
-
-### Stufe 18: (SELECT, FROM, JOIN (multiple), GROUP BY, COUNT, MAX, CASE, WHERE, ORDER BY)
-SELECT c.CustomerId, c.FirstName, c.LastName,
-       CASE 
-           WHEN MAX(i.Total) > 50 THEN 'High Spender'
-           WHEN MAX(i.Total) BETWEEN 20 AND 50 THEN 'Medium Spender'
-           ELSE 'Low Spender'
-       END AS SpendingCategory
-FROM Customer c
-JOIN Invoice i ON c.CustomerId = i.CustomerId
-GROUP BY c.CustomerId, c.FirstName, c.LastName
-ORDER BY SpendingCategory DESC;
-* Kategorisiere jeden Kunden als "High Spender", "Medium Spender" oder "Low Spender" basierend auf dem höchsten Rechnungsbetrag, und sortiere die Kunden nach diesen Kategorien.
-
----
-
-### Stufe 19: (WITH, SELECT, JOIN (multiple), ROW_NUMBER, PARTITION BY, ORDER BY, SUM, AVG)
-WITH CustomerSpending AS (
-    SELECT 
-        c.CustomerId,
-        c.FirstName,
-        c.LastName,
-        SUM(i.Total) AS TotalSpent,
-        AVG(i.Total) AS AvgSpent,
-        ROW_NUMBER() OVER (PARTITION BY c.Country ORDER BY SUM(i.Total) DESC) AS SpendingRank
-    FROM Customer c
-    JOIN Invoice i ON c.CustomerId = i.CustomerId
-    GROUP BY c.CustomerId, c.FirstName, c.LastName, c.Country
-)
-SELECT CustomerId, FirstName, LastName, TotalSpent, AvgSpent
-FROM CustomerSpending
-WHERE SpendingRank = 1
-ORDER BY TotalSpent DESC;
-* Zeige mir für jedes Land den Kunden mit den höchsten Gesamtausgaben und zeige seine Gesamtausgaben und durchschnittlichen Ausgaben an.
-
----
-
-### Stufe 20: (WITH, JOIN (multiple), CASE, COUNT, SUM, RANK, PARTITION BY, WHERE, ORDER BY)
-WITH GenrePreferences AS (
-    SELECT 
-        c.CustomerId,
-        g.Name AS Genre,
-        COUNT(il.InvoiceLineId) AS GenreCount,
-        SUM(il.UnitPrice * il.Quantity) AS TotalSpent,
-        RANK() OVER (PARTITION BY c.CustomerId ORDER BY COUNT(il.InvoiceLineId) DESC) AS GenreRank
-    FROM Customer c
-    JOIN Invoice i ON c.CustomerId = i.CustomerId
-    JOIN InvoiceLine il ON i.InvoiceId = il.InvoiceId
-    JOIN Track t ON il.TrackId = t.TrackId
-    JOIN Genre g ON t.GenreId = g.GenreId
-    GROUP BY c.CustomerId, g.Name
-)
-SELECT CustomerId, Genre, GenreCount, TotalSpent
-FROM GenrePreferences
-WHERE GenreRank = 1
-ORDER BY TotalSpent DESC;
-* Zeige für jeden Kunden das Genre, das er am häufigsten gekauft hat, zusammen mit der Anzahl und dem Gesamtumsatz dieses Genres, und sortiere das Ergebnis nach dem Gesamtumsatz in absteigender Reihenfolge.
