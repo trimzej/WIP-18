@@ -112,7 +112,7 @@ WITH CustomerSpending AS (SELECT Customer.Country, Customer.FirstName, Customer.
 
 ### Stufe 18: (SELECT, FROM, SUM, AS, JOIN (multiple), ON, GROUP BY, CASE, WHEN, THEN, ELSE, END):
 SELECT Invoice.BillingCountry, SUM(CASE WHEN Genre.Name = 'Rock' THEN 1 ELSE 0 END) AS Rock, SUM(CASE WHEN Genre.Name = 'Jazz' THEN 1 ELSE 0 END) AS Jazz, SUM(CASE WHEN Genre.Name = 'Metal' THEN 1 ELSE 0 END) AS Metal, SUM(CASE WHEN Genre.Name = 'Alternative & Punk' THEN 1 ELSE 0 END) AS Alternative_Punk, SUM(CASE WHEN Genre.Name = 'Classical' THEN 1 ELSE 0 END) AS Classical, SUM(CASE WHEN Genre.Name = 'Pop' THEN 1 ELSE 0 END) AS Pop, SUM(CASE WHEN Genre.Name = 'Latin' THEN 1 ELSE 0 END) AS Latin FROM Invoice JOIN InvoiceLine ON Invoice.InvoiceId = InvoiceLine.InvoiceId JOIN Track ON InvoiceLine.TrackId = Track.TrackId JOIN Genre ON Track.GenreId = Genre.GenreId GROUP BY Invoice.BillingCountry;
-* Erstelle eine Tabelle, die die Anzahl der Verkauften Tracks nach Genre in jedem Land aufzeigt, mit den Genres: Rock, Jazz, Metal, Alternative & Punk, Classical, Pop und Latin.
+* Erstelle eine Tabelle, die die Anzahl der verkauften Tracks nach Genre in jedem Land aufzeigt, mit den Genres: Rock, Jazz, Metal, Alternative & Punk, Classical, Pop und Latin.
 
 ---
 
