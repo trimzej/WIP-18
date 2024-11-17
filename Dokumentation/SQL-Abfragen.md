@@ -82,7 +82,7 @@ SELECT Artist.Name AS Artist, SUM(InvoiceLine.UnitPrice * InvoiceLine.Quantity) 
 
 ### Stufe 13: (SELECT, COUNT, AS, FROM, JOIN (multiple), ON, WHERE, GROUP BY, ORDER BY, DESC, LIMIT):
 SELECT Album.Title, COUNT(*) AS NumberOfTracks FROM PlaylistTrack JOIN Track ON PlaylistTrack.TrackId = Track.TrackId JOIN Album ON Track.AlbumId = Album.AlbumId WHERE PlaylistTrack.PlaylistId = 10 GROUP BY Album.AlbumId ORDER BY NumberOfTracks DESC LIMIT 1;
-* Zeig mir den Titel und die Anzahl Tracks des Albums, das am meisten Tracks in der Playlist mit der ID 10 hat.
+* Zeig mir den Titel des Albums, das am meisten Tracks in der Playlist mit der ID 10 hat, sowie die Anzahl Tracks, das dieses Album in der Playlilst mit der ID 10 hat.
 
 ---
 
