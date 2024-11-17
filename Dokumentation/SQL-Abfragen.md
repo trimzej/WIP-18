@@ -179,7 +179,7 @@ FROM Customer c
 JOIN Invoice i ON c.CustomerId = i.CustomerId
 GROUP BY c.CustomerId, c.FirstName, c.LastName
 ORDER BY SpendingCategory DESC;
-* Kategorisiere jeden Kunden als "High Spender", "Medium Spender" oder "Low Spender" basierend auf dem höchsten Rechnungsbetrag, und sortiere die Kunden nach diesen Kategorien.
+* Kategorisiere jeden Kunden als 'High Spender' (>50), 'Medium Spender (20-50)' oder 'Low Spender' (<20) basierend auf dem höchsten Rechnungsbetrag, und gib alle Kunden mit den entsprechenden kategorien aus.
 
 ---
 
