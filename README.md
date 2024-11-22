@@ -1,7 +1,5 @@
 # WIP-18
 
-
 # Autoren: Leandros, Pascal & Trim
 
-
-umuich
+Nähere Beschreibung unseres Projektes
