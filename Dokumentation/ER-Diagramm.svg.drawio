@@ -1,0 +1,46 @@
+<mxfile host="65bd71144e">
+    <diagram id="O3FkTN9pHQnWxjiv1CAF" name="Page-1">
+        <mxGraphModel dx="1218" dy="691" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2336" pageHeight="1654" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="6" value="Album" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="120" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="Artist" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="120" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="Track" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="180" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="MediaType" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="880" y="120" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="10" value="Genre" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="880" y="240" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="11" value="Playlist" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="240" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="12" value="PlaylistTrack" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="240" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="13" value="InvoiceLine" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="360" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="14" value="Invoice" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="670" y="520" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="15" value="Customer" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="440" y="440" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="16" value="Employee" style="whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="120" y="440" width="100" height="40" as="geometry"/>
+                </mxCell>
+                <mxCell id="19" value="Relationship" style="shape=rhombus;perimeter=rhombusPerimeter;whiteSpace=wrap;html=1;align=center;" vertex="1" parent="1">
+                    <mxGeometry x="270" y="110" width="120" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
