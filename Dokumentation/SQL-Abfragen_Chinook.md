@@ -1,7 +1,7 @@
 # SQL-Abfragen - Chinook-Datenbank
 
 ## Fokus
-In diesem Dokument werden die Datenbankabfragen vorgestellt, die im Rahmen dieser Arbeit verwendet werden, um die Leistungsfähigkeit von auf NLP basierter KI zu prüfen. Die Abfragen sind so strukturiert, dass sie eine stufenweise Steigerung der Komplexität aufweisen.
+Im Folgenden werden die Datenbankabfragen vorgestellt, die im Rahmen dieser Studie verwendet werden, um die Leistungsfähigkeit von KI bei der Generierung von SQL-Abfragen zu untersuchen. Die Abfragen sind so strukturiert, dass sie eine stufenweise Steigerung der Komplexität aufweisen.
 
 Die Komplexität der einzelnen Stufen wird durch die Anzahl der Operationen in jeder Abfrage definiert. Mit jeder weiteren Stufe werden zusätzliche Operationen (wie COUNT, JOIN etc.) eingeführt, wobei die Operationen der vorherigen Stufen weitestgehend beibehalten werden. Die Operationen sind nach der vermuteten Komplexität für den KI-Algorithmus geordnet.
 

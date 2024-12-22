@@ -3,7 +3,7 @@
 ## Fokus
 Da die Chinook-Datenbank eine etablierte Datenbank ist und das LLM möglicherweise Kenntniss der Datenbank hat, wurde die Car_Dealer_Data-Datenbank herangezogen, um die Bias zu überprüfen.
 
-Im folgenden werden die Datenbankabfragen vorgestellt, welche verwendet wurden um die Leistungsfähigkeit des LLMs mit einer weniger bekannten Datenbank zu überprüfen. Hierbei wurden einige der Abfragen, welche bereits für die Chinook-Datenbank verwendet wurden genommen und an die Daten dieser, dem LLM weniger bekannten, Datenbank angepasst. Somit soll sichergestellt werden, dass keine einfacheren oder schwierigeren Abfragen erstellt werden und somit die Ergebnisse verzerrt werden.
+Im folgenden werden die Datenbankabfragen vorgestellt, welche für die Überprüfung der Bias verwendet wurden. Hierbei wurden einige der Abfragen, welche bereits für die Chinook-Datenbank verwendet wurden genommen und an die Daten dieser, dem LLM weniger bekannten, Datenbank angepasst. Somit soll sichergestellt werden, dass kein abweichender Schwierigkeitsgrad entsteht und somit die Ergebnisse verzerrt.
 
 
 ## Abfragen
